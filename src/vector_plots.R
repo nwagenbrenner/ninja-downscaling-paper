@@ -18,8 +18,7 @@ l2 <- list("NAM", "HRRR", "WRFUW", "WRFNARR") #list of forecast names
 
 data<-wnBuildBiasDf(l, l2) #build main df
 
-t<-as.POSIXct(strptime("2010-07-19 02:00:00", '%Y-%m-%d %H:%M:%S'))
-
+t<-as.POSIXct(strptime("2010-09-05 13:00:00", '%Y-%m-%d %H:%M:%S'))
 #subset on time
 s <- subset(data, subset=(datetime == t))
 
@@ -32,19 +31,21 @@ s.hr.temp <- buildBiasHourlyAverages(ss)
 s.hr.temp$fcastName<-'NAM (12 km)'
 s.hr<-rbind(s.hr, s.hr.temp)
 
-
 #s <-subset(s, subset=(fcastName=='WRF-NARR (1.33 km)'))
 #s <-subset(s, subset=(fcastName=='WindNinja-WRF-NARR'))
-
-
 
 #bsb
 lat = 43.402726
 lon = -113.027724
 zoom = 12
 maptype = 'terrain' #terrain, hybrid
-datatype = 'predicted' #observed or predicted
+#datatype = 'predicted' #observed or predicted
 colorscale='discrete' #discrete or continous
+
+m <- wnCreatePredObsVectorMap(s.hr, lat, lon, zoom, 
+                       maptype, 
+                       colorscale=colorscale, 
+                       axis_labels=FALSE)
 
 #m <- wnCreateVectorMap(s.hr, lat, lon, zoom, 
 #                       maptype, 
@@ -52,10 +53,6 @@ colorscale='discrete' #discrete or continous
 #                       axis_labels=FALSE, 
 #                       datatype=datatype)
 
-m <- wnCreatePredObsVectorMap(s.hr, lat, lon, zoom, 
-                       maptype, 
-                       colorscale=colorscale, 
-                       axis_labels=FALSE)
 #-----------------------------------
 # make a bubble plot of the bias
 #-----------------------------------
