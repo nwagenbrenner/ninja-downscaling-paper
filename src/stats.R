@@ -140,8 +140,8 @@ stats <- ddply(d, .(wxTypeOrdered, fcastType, flow_regime), function(df)c(mean(d
 colnames(stats) <- c("wxType", "fcastType", "flow_regime", "bias", "rmse", "sde")
 
 #downslope flow regime
-#down<-subsetOnSpeed(d, 'NM1', '<', 5.0)
-down<-subsetOnSpeed(d, 'R2', '<', 6.0)
+down<-subsetOnSpeed(d, 'NM1', '<', 5.0)
+#down<-subsetOnSpeed(d, 'R2', '<', 6.0)
 down$datetime<-as.POSIXlt(as.character(down$datetime))
 down<-subset(down, subset=(datetime$hour %in% c(22:23, 0:7)))
 #down<-subset(down, subset=(datetime$hour %in% c(23, 0:7)))
@@ -154,8 +154,8 @@ colnames(temp) <- c("wxType", "fcastType", "flow_regime", "bias", "rmse", "sde")
 stats<-rbind(stats, temp)
 
 #upslope flow regime
-#up<-subsetOnSpeed(d, 'NM1', '<', 5.0)
-up<-subsetOnSpeed(d, 'R2', '<', 6.0)
+up<-subsetOnSpeed(d, 'NM1', '<', 5.0)
+#up<-subsetOnSpeed(d, 'R2', '<', 6.0)
 up$datetime<-as.POSIXlt(as.character(up$datetime))
 #up<-subset(up, subset=(datetime$hour %in% c(10:15)))
 up<-subset(up, subset=(datetime$hour %in% c(9:12)))
@@ -168,8 +168,8 @@ colnames(temp) <- c("wxType", "fcastType", "flow_regime", "bias", "rmse", "sde")
 stats<-rbind(stats, temp)
 
 #synoptically driven flow regime
-#sdriven<-subsetOnSpeed(d, 'NM1', '>', 5.0)
-sdriven<-subsetOnSpeed(d, 'R2', '>', 6.0)
+sdriven<-subsetOnSpeed(d, 'NM1', '>', 5.0)
+#sdriven<-subsetOnSpeed(d, 'R2', '>', 6.0)
 sdriven$flow_regime<-"Synoptically-driven"
 
 temp <- ddply(sdriven, .(wxTypeOrdered, fcastType, flow_regime), function(df)c(mean(df$bias_dir), 
